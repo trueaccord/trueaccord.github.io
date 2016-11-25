@@ -1,5 +1,0 @@
----
-Title: foo
----
-
-Hello there
