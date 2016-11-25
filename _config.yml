@@ -1,0 +1,5 @@
+baseurl: https://trueaccord.github.io
+
+gems:
+  - jekyll-redirect-from
+
