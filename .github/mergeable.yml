@@ -24,27 +24,6 @@ mergeable:
           count: 1
         limit:
           teams: [ 'trueaccord/engineers' ]
-  - when: pull_request.*, pull_request_review.*
-    name: "Require cross-team approvals"
-    validate:
-    - do: and
-      validate:
-        - do: approvals
-          required:
-            min:
-              count: 1
-            limit:
-              teams: [ 'trueaccord/contributors' ]
-        - do: approvals
-          required:
-            min:
-              count: 1
-            limit:
-              teams: [ 'trueaccord/engineers' ]
-    pass:
-    - do: comment
-      payload:
-        body: "Change approved by both teams"
   - when: pull_request.*, pull_request_review.*, status.*, check_suite.*
     name: "Automatically merge pull requests once all checks are met"
     validate: []
