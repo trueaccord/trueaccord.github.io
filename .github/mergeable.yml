@@ -1,14 +1,54 @@
 version: 2
 mergeable:
-  - when: pull_request.*
+  - when: pull_request.*  # Fails to actually pop up the failure message properly, bug in underlying mergeable code perhaps?
     validate:
       - do: description
         no_empty:
           enabled: true
           message: Descriptions matter and should not be empty. Provide detail with **what** was changed, **why** it was changed, and **how** it was changed.
+  - when: pull_request.*, pull_request_review.*
+    name: "Require contributor review"
+    validate:
+    - do: approvals
+      required:
+        min:
+          count: 1
+        limit:
+          teams: [ 'trueaccord/contributors' ]
+  - when: pull_request.*, pull_request_review.*
+    name: "Require engineer (Maintainer) review"
+    validate:
+    - do: approvals
+      required:
+        min:
+          count: 1
+        limit:
+          teams: [ 'trueaccord/engineers' ]
+  - when: pull_request.*, pull_request_review.*
+    name: "Require cross-team approvals"
+    validate:
+    - do: and
+      validate:
+        - do: approvals
+          required:
+            min:
+              count: 1
+            limit:
+              teams: [ 'trueaccord/contributors' ]
+        - do: approvals
+          required:
+            min:
+              count: 1
+            limit:
+              teams: [ 'trueaccord/engineers' ]
+    pass:
+    - do: comment
+      payload:
+        body: "Change approved by both teams"
   - when: pull_request.*, pull_request_review.*, status.*, check_suite.*
     name: "Automatically merge pull requests once all checks are met"
     validate: []
     pass:
-      - do: merge
-        merge_method: "squash"
+    - do: merge
+      merge_method: "squash"
+
