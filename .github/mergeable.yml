@@ -10,24 +10,21 @@ mergeable:
     name: "Require contributor review"
     validate:
     - do: approvals
-      required:
-        min:
-          count: 1
-        limit:
-          teams: [ 'trueaccord/contributors' ]
+      min:
+        count: 1
+      limit:
+        teams: [ 'trueaccord/contributors' ]
   - when: pull_request.*, pull_request_review.*
     name: "Require engineer (Maintainer) review"
     validate:
     - do: approvals
-      required:
-        min:
-          count: 1
-        limit:
-          teams: [ 'trueaccord/engineers' ]
+      min:
+        count: 1
+      limit:
+        teams: [ 'trueaccord/engineers' ]
   - when: pull_request.*, pull_request_review.*, status.*, check_suite.*
     name: "Automatically merge pull requests once all checks are met"
     validate: []
     pass:
     - do: merge
       merge_method: "squash"
-
