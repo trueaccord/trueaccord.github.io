@@ -9,8 +9,7 @@ mergeable:
   - when: pull_request.*, pull_request_review.*
     name: "Require contributor review"
     validate:
-    - do: approvals
-      required:
+      - do: approvals
         min:
           count: 1
         limit:
@@ -18,8 +17,7 @@ mergeable:
   - when: pull_request.*, pull_request_review.*
     name: "Require engineer (Maintainer) review"
     validate:
-    - do: approvals
-      required:
+      - do: approvals
         min:
           count: 1
         limit:
@@ -28,6 +26,5 @@ mergeable:
     name: "Automatically merge pull requests once all checks are met"
     validate: []
     pass:
-    - do: merge
-      merge_method: "squash"
-
+      - do: merge
+        merge_method: "squash"
