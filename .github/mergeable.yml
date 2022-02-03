@@ -21,7 +21,7 @@ mergeable:
         min:
           count: 1
         limit:
-          teams: [ 'trueaccord/engineers' ]
+          teams: [ 'trueaccord/engineering' ]
   - when: pull_request.*, pull_request_review.*, status.*, check_suite.*
     name: "Automatically merge pull requests once all checks are met"
     validate: []
