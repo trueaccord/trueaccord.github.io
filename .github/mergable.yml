@@ -1,0 +1,14 @@
+version: 2
+mergeable:
+  - when: pull_request.*
+    validate:
+      - do: description
+        no_empty:
+          enabled: true
+          message: Descriptions matter and should not be empty. Provide detail with **what** was changed, **why** it was changed, and **how** it was changed.
+  - when: pull_request.*, pull_request_review.*, status.*, check_suite.*
+    name: "Automatically merge pull requests once all checks are met"
+    validate: []
+    pass:
+      - do: merge
+        merge_method: "squash"
